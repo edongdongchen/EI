@@ -14,11 +14,6 @@ All packages are listed in the below Anaconda environment.yml file, create an en
 conda env create -f environment.yml
 ```
 
-## Train
-```
-python3 demo_train.py --gpu 0 --task 'inpainting' --mode 'ei'
-```
-
 ## To do
 * ~~add core modules~~
 
