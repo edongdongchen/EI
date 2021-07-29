@@ -20,11 +20,11 @@ python3 demo_train.py --gpu 0 --task 'inpainting' --mode 'ei'
 ```
 
 ## To do
-. add demo of testing
+* add demo of testing
 
-. add demo of single image reconstruction
+* add demo of single image reconstruction
 
-. upload the trained models
+* upload the trained models
 
 
 ### Citation
