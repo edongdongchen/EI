@@ -77,7 +77,7 @@ def main():
     if args.task=='inpainting':
         dataloader = CVDB_ICCV(dataset_name='Urban100', mode='train',
                                batch_size=args.batch_size, shuffle=True)
-        physics = Inpainting(img_heigth=256, img_width=256, mode='random', mask_rate=args.mask_rate, device=device)
+        physics = Inpainting(img_heigth=256, img_width=256, mask_rate=args.mask_rate, device=device)
         transform = Shift(n_trans=args.ei_trans)
         ei = EI(in_channels=3, out_channels=3,
                 img_width=256, img_height=256,
