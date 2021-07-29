@@ -3,7 +3,6 @@ import torch
 
 class Inpainting():
     def __init__(self, img_heigth=512, img_width=512, mode='random', mask_rate=0.3, resize=False, device='cuda:0'):
-
         mask_path = './physics/mask_random{}.pt'.format(mask_rate)
         if os.path.exists(mask_path):
             self.mask = torch.load(mask_path).to(device)
