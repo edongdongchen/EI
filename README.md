@@ -20,7 +20,7 @@ python3 demo_train.py --gpu 0 --task 'inpainting' --mode 'ei'
 ```
 
 ## To do
-. add demo of test
+. add demo of testing
 
 . add demo of single image reconstruction
 
@@ -32,6 +32,6 @@ python3 demo_train.py --gpu 0 --task 'inpainting' --mode 'ei'
 	@inproceedings{chen2021equivariant,
     title = {Equivariant Imaging: Learning Beyond the Range Space},
 		author={Chen, Dongdong and Tachella, Juli{\'a}n and Davies, Mike E},
-		booktitle={Proceedings of the International Conference on Computer Vision (ECCV)},
+		booktitle={Proceedings of the International Conference on Computer Vision (ICCV)},
 		year = {2021}
 	}
