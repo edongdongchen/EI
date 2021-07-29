@@ -2,27 +2,27 @@
 
 This repository is the official implementation of [Equivariant Imaging: Learning Beyond the Range Space](https://arxiv.org/abs/2103.14756) (ICCV'2021 oral paper)
 
-by [Dongdong Chen](https://dongdongchen.com), [Julián Tachella](https://https://tachella.github.io/home/), [Mike E. Davies](https://scholar.google.co.uk/citations?user=dwmfR3oAAAAJ&hl=en).
+by [Dongdong Chen](https://dongdongchen.com), [Julián Tachella](https://tachella.github.io/), [Mike E. Davies](https://scholar.google.co.uk/citations?user=dwmfR3oAAAAJ&hl=en).
 
 
 ## Requirements
 
 * [PyTorch](https://pytorch.org/) (1.6)
 
-All used packages are listed in the below Anaconda environment.yml file, you can create an environment and run
+All used packages are listed in the Anaconda environment.yml file. You can create an environment and run
 ```
 conda env create -f environment.yml
 ```
 
-## Get a quick started
+## Get quickly started
 
 * Please find the core implementation of EI at './ei/closure/ei.py' ([ei.py](https://github.com/edongdongchen/EI/blob/master/ei/closure/ei.py)).
-* Please find the 30 lines code [get_started.py](https://github.com/edongdongchen/EI/blob/master/get_started.py) to get a quick started with the EI.
+* Please find the 30 lines code [get_started.py](https://github.com/edongdongchen/EI/blob/master/get_started.py) to get started with EI.
 
 
 ## Test
-We provide the trained models used in the paper and which can be downloaded at [Google Dirve](https://drive.google.com/drive/folders/1Io0quD-RvoVNkCmE36aQYpoouEAEP5pF?usp=sharing).
-Please put the downloaded folder 'ckp' under the root path. Then evaluate the trained models by running
+We provide the trained models used in the paper which can be downloaded at [Google Drive](https://drive.google.com/drive/folders/1Io0quD-RvoVNkCmE36aQYpoouEAEP5pF?usp=sharing).
+Please put the downloaded folder 'ckp' in the root path. Then evaluate the trained models by running
 ```
 python3 demo_test_inpainting.py
 ```
@@ -33,7 +33,7 @@ python3 demo_test_ct.py
 
 ## Train
 
-To train EI for a task (inpainting or CT), run
+To train EI for a given inverse problem (inpainting or CT), run
 ```
 python3 demo_train.py --task 'inpainting'
 ```
@@ -47,8 +47,8 @@ To train your EI models on your dataset for a specific inverse problem (e.g. inp
 ```
 python3 demo_train.py --h
 ```
-* Note: you may have to implement the forward model (physics) if you mannage to solve a new inverse problem.
-* Note: what you only need to do then is specifying some hyperparameters (e.g. the path of your trainingset).
+* Note: you may have to implement the forward model (physics) if you manage to solve a new inverse problem.
+* Note: you only need to specify some basic settings (e.g. the path of your training set).
 
 
 ## To Do
