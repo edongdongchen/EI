@@ -20,9 +20,9 @@ python3 demo_train.py --gpu 0 --task 'inpainting' --mode 'ei'
 ```
 
 ## To do
-*~~add core modules~~
+* ~~add core modules~~
 
-*~~add demo of training~~
+* ~~add demo of training~~
 
 * add demo of testing
 
