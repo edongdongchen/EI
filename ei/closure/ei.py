@@ -10,10 +10,10 @@ def closure_ei(net, dataloader, physics, transform,
         x = x[0] if isinstance(x, list) else x
         if len(x.shape)==3:
             x = x.unsqueeze(1)
-        x = x.type(dtype).to(device)
+        x = x.type(dtype).to(device)# ground-truth signal x
 
-        y0 = physics.A(x.type(dtype).to(device))
-        x0 = physics.A_dagger(y0) #range input (pr)
+        y0 = physics.A(x.type(dtype).to(device)) # measurement input y
+        x0 = physics.A_dagger(y0) #range input (A^+y)
 
         x1 = net(x0)
         y1 = physics.A(x1)
