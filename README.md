@@ -14,6 +14,12 @@ All used packages are listed in the below Anaconda environment.yml file, you can
 conda env create -f environment.yml
 ```
 
+## Get a quick started
+
+* Please find the core implementation of EI at './ei/closure/ei.py' ([ei.py](https://github.com/edongdongchen/EI/blob/master/ei/closure/ei.py)).
+* Please find the 30 lines code [get_started.py](https://github.com/edongdongchen/EI/blob/master/get_started.py) to get a quick started with the EI.
+
+
 ## Test
 We provide the trained models used in the paper and which can be downloaded at [Google Dirve](https://drive.google.com/drive/folders/1Io0quD-RvoVNkCmE36aQYpoouEAEP5pF?usp=sharing).
 Please put the downloaded folder 'ckp' under the root path. Then evaluate the trained models by running
