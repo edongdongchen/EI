@@ -11,7 +11,6 @@ class Shift():
         return shift_random(x, self.n_trans)
 
 def shift_random(x, n_trans=5, max_offset=0):
-
     H, W = x.shape[-2], x.shape[-1]
     assert n_trans <= H - 1 and n_trans <= W - 1, 'n_shifts should less than {}'.format(H-1)
 
