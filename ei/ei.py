@@ -19,7 +19,6 @@ from utils.logger import get_timestamp, LOG
 class EI(object):
     def __init__(self, in_channels, out_channels, img_width, img_height, dtype, device):
         super(EI, self).__init__()
-        #assert mod in ['end2end', 'adversarial', 'pnp', 'unrolling']
         self.in_channels = in_channels
         self.out_channels = out_channels
         self.img_width = img_width
