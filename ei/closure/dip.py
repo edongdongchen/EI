@@ -4,7 +4,7 @@ from utils.metric import cal_psnr
 
 #only for one-shot imaging
 def closure_dip(net, dataloader, z, physics,
-                    optimizer, criterion_fc,
+                    optimizer, criterion_mc,
                     dtype, device, reportpsnr=False):
     loss_dip_seq = []
     for i, x in enumerate(dataloader):
@@ -24,9 +24,9 @@ def closure_dip(net, dataloader, z, physics,
             psnr = cal_psnr(x1, x)
             mse = torch.nn.MSELoss()(x1, x).item()
 
-        loss_fc = criterion_fc(y1, y0)
+        loss_mc = criterion_mc(y1, y0)
 
-        loss_dip_seq.append(loss_fc.item())
+        loss_dip_seq.append(loss_mc.item())
 
         optimizer.zero_grad()
         loss_fc.backward()
