@@ -22,7 +22,7 @@ def closure_sup_ei(net, dataloader, physics, transform,
         x3 = net(physics.A_dagger(physics.A(x2)))
 
         loss_x = criterion_fc(x1, x)
-        loss_ei = criterion_ti(x3, x2)
+        loss_ei = criterion_ei(x3, x2)
 
         loss = loss_x + alpha['ei'] * loss_ei
 
