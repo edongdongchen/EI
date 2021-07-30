@@ -2,9 +2,9 @@ import numpy as np
 from utils.metric import cal_psnr, cal_mse
 
 def closure_sup_ei(net, dataloader, physics, transform,
-                    optimizer, criterion_fc, criterion_ti,
+                    optimizer, criterion_fc, criterion_ei,
                     alpha, dtype, device, reportpsnr=False):
-    loss_x_seq, loss_ti_seq, loss_seq, psnr_seq, mse_seq= [], [], [],[],[]
+    loss_x_seq, loss_ei_seq, loss_seq, psnr_seq, mse_seq= [], [], [],[],[]
     for i, x in enumerate(dataloader):
         x = x[0] if isinstance(x, list) else x
         if len(x.shape)==3:
@@ -17,17 +17,17 @@ def closure_sup_ei(net, dataloader, physics, transform,
         x1 = net(x0)
         y1 = physics.A(x1)
 
-        # TI: x2, x3
+        # EI: x2, x3
         x2 = transform.apply(x1)
         x3 = net(physics.A_dagger(physics.A(x2)))
 
         loss_x = criterion_fc(x1, x)
-        loss_ti = criterion_ti(x3, x2)
+        loss_ei = criterion_ti(x3, x2)
 
-        loss = loss_x + alpha['ti'] * loss_ti
+        loss = loss_x + alpha['ei'] * loss_ei
 
         loss_x_seq.append(loss_x.item())
-        loss_ti_seq.append(loss_ti.item())
+        loss_ei_seq.append(loss_ei.item())
         loss_seq.append(loss.item())
 
         if reportpsnr:
@@ -38,7 +38,7 @@ def closure_sup_ei(net, dataloader, physics, transform,
         loss.backward()
         optimizer.step()
 
-    loss_closure = [np.mean(loss_x_seq), np.mean(loss_ti_seq), np.mean(loss_seq)]
+    loss_closure = [np.mean(loss_x_seq), np.mean(loss_ei_seq), np.mean(loss_seq)]
 
     if reportpsnr:
         loss_closure.append(np.mean(psnr_seq))
