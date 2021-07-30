@@ -35,22 +35,22 @@ def closure_ei_adv(generator, discriminator, dataloader, physics, transform,
 
         optimizer_G.zero_grad()
 
-        # Generate a batch of images from range input
+        # Generate a batch of images from range input A^+y
         x1 = generator(x0)
         y1 = physics.A(x1)
 
-        # TI: x2, x3
+        # EI: x2, x3
         x2 = transform.apply(x1)
         x3 = generator(physics.A_dagger(physics.A(x2)))
 
-        # Loss measures generator's ability to forward consistency and TI
+        # Loss measures generator's ability to measurement consistency and ei
         loss_fc = criterion_mc(y1, y0)
-        loss_ti = criterion_ei(x3, x2)
+        loss_ei = criterion_ei(x3, x2)
 
         # Loss measures generator's ability to fool the discriminator
         loss_g = criterion_gan(discriminator(x2), valid_ei)
 
-        loss_G = loss_fc + alpha['ei'] * loss_ti + alpha['adv'] * loss_g
+        loss_G = loss_fc + alpha['ei'] * loss_ei + alpha['adv'] * loss_g
 
         loss_G.backward()
         optimizer_G.step()
@@ -79,7 +79,7 @@ def closure_ei_adv(generator, discriminator, dataloader, physics, transform,
         # --------------
 
         loss_mc_seq.append(loss_fc.item())
-        loss_ei_seq.append(loss_ti.item())
+        loss_ei_seq.append(loss_ei.item())
         loss_g_seq.append(loss_g.item())
         loss_G_seq.append(loss_G.item())# total loss for G
         loss_D_seq.append(loss_D.item())# total loss for D
