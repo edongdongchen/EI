@@ -18,7 +18,7 @@ def closure_ei(net, dataloader, physics, transform,
         x1 = net(x0)
         y1 = physics.A(x1)
 
-        # equivariance imaging: x2, x3
+        # equivariant imaging: x2, x3
         x2 = transform.apply(x1)
         x3 = net(physics.A_dagger(physics.A(x2)))
 
