@@ -13,7 +13,7 @@ from transforms.shift import Shift
 parser = argparse.ArgumentParser(description='CT experiment parameters.')
 
 parser.add_argument('--gpu', default=0, type=int, help='GPU id to use.')
-parser.add_argument('--schedule', default=[500, 1000, 1500], nargs='*', type=int,
+parser.add_argument('--schedule', nargs='+', type=int,
                     help='learning rate schedule (when to drop lr by 10x),'
                          'default [2000, 3000, 4000] for CT,'
                          'default [500, 1000, 1500] for inpainting')
