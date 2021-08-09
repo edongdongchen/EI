@@ -21,7 +21,7 @@ parser.add_argument('--cos', action='store_true', help='use cosine lr schedule')
 parser.add_argument('--epochs', default=2000, type=int, metavar='N',
                     help='number of total epochs to run '
                          '(default 5000 for CT, 2000 for inpainting)')
-parser.add_argument('--lr', '--learning-rate', default=1e-3, type=float,
+parser.add_argument('--lr', '--learning-rate', default=1e-1, type=float,
                     metavar='LR', help='initial learning rate '
                                        '(default 5e-4 for CT, 1e-3 for inpainting)',
                     dest='lr')
