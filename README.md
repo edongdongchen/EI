@@ -16,8 +16,10 @@ conda env create -f environment.yml
 
 ## Get quickly started
 
-* Please find the core implementation of EI at './ei/closure/ei.py' ([ei.py](https://github.com/edongdongchen/EI/blob/master/ei/closure/ei.py)).
+* Please find the [blog post](https://tachella.github.io/2021/04/16/equivariant-imaging-learning-beyond-the-range-space/) for a quick introduction of EI.
 * Please find the 30 lines code [get_started.py](https://github.com/edongdongchen/EI/blob/master/get_started.py) to get started with EI.
+* Please find the core implementation of EI at './ei/closure/ei.py' ([ei.py](https://github.com/edongdongchen/EI/blob/master/ei/closure/ei.py)).
+
 
 
 ## Test
@@ -49,20 +51,6 @@ python3 demo_train.py --h
 ```
 * Note: you may have to implement the forward model (physics) if you manage to solve a new inverse problem.
 * Note: you only need to specify some basic settings (e.g. the path of your training set).
-
-
-## To Do
-* ~~add core modules~~ [DONE]
-
-* add illustrations
-
-* ~~add demo of training~~  [DONE]
-
-* ~~add demo of testing~~  [DONE]
-
-* add demo of single image reconstruction
-
-* ~~upload the trained model~~  [DONE]
 
 
 ### Citation
