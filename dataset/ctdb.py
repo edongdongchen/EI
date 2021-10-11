@@ -8,6 +8,7 @@ class CTData(Dataset):
     def __init__(self, mode='train', root_dir='./dataset/CT/CT100_128x128.mat'):
         # the original CT100 dataset can be downloaded from 
         # https://www.kaggle.com/kmader/siim-medical-images
+        # the images are resized and saved in Matlab. 
         
         mat_data = scio.loadmat(root_dir)
         x = torch.from_numpy(mat_data['DATA'])
