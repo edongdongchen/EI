@@ -51,7 +51,7 @@ Key observations:
 ![overview](https://github.com/edongdongchen/EI/blob/main/images/invariance_iccv.png)
 Figure: **Learning with and without equivariance in a toy 1D signal inpainting task.** The signal set consists of different scaling of a triangular signal. On the left, the dataset does not enjoy any invariance, and hence it is not possible to learn the data distribution in the nullspace of <img src="https://render.githubusercontent.com/render/math?math=A">. In this case, the network can inpaint the signal in an arbitrary way (in green), while achieving zero data consistency loss. On the right, the dataset is shift invariant. The range space of <img src="https://render.githubusercontent.com/render/math?math=A^{\top}"> is shifted via the transformations <img src="https://render.githubusercontent.com/render/math?math=T_g">, and the network inpaints the signal correctly.
 
-**Equivariant Imaging:** to learn <img src="https://render.githubusercontent.com/render/math?math=f"> by using only measurements <img src="https://render.githubusercontent.com/render/math?math={y_i}">, all you need is to:
+**Equivariant Imaging:** to learn <img src="https://render.githubusercontent.com/render/math?math=f"> by using only measurements <img src="https://render.githubusercontent.com/render/math?math=\{y_i\}">, all you need is to:
 - Define:
 
 1. define a transformation group  <img src="https://render.githubusercontent.com/render/math?math={T_g}"> based on the certain invariances to the signal set.
