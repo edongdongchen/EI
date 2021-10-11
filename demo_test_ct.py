@@ -15,7 +15,8 @@ parser.add_argument('--sample-to-show', default=[9], nargs='*', type=int,
                     help='the test sample id for visualization'
                          'default [9]')
 parser.add_argument('--ckp', default='./ckp/ct/ckp_ei_final.pth.tar', type=str, metavar='PATH',
-                    help='path to checkpoint of EI net')
+                    help='path to checkpoint of a trained model')
+parser.add_argument('--model-name', default='EI', type=str, help="name of the trained model (dafault: 'EI')")
 
 def main():
     args = parser.parse_args()
@@ -53,7 +54,7 @@ def main():
             
             plt.subplot(1,4,3)
             plt.imshow(x_hat[0].detach().permute(1, 2, 0).cpu().numpy())
-            plt.title('EI ({:.2f})'.format(cal_psnr(x, fbp)))
+            plt.title('{} ({:.2f})'.format(args.model_name, cal_psnr(x, x_hat)))
             
             plt.subplot(1,4,4)
             plt.imshow(x[0].detach().permute(1, 2, 0).cpu().numpy())
