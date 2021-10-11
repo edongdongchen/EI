@@ -1,6 +1,8 @@
 # Equivariant Imaging: Learning Beyond the Range Space
 
-### [post](https://tachella.github.io/2021/04/16/equivariant-imaging-learning-beyond-the-range-space/) | [paper](https://openaccess.thecvf.com/content/ICCV2021/papers/Chen_Equivariant_Imaging_Learning_Beyond_the_Range_Space_ICCV_2021_paper.pdf) | [example](https://github.com/edongdongchen/EI/blob/main/ei_demo_cs_usps.ipynb) [![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/edongdongchen/EI/blob/main/ei_demo_cs_usps.ipynb)
+[![arXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2103.14756)
+[![GitHub Stars](https://img.shields.io/github/stars/edongdongchen/EI?style=social)](https://github.com/edongdongchen/EI)
+[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/edongdongchen/EI/blob/main/ei_demo_cs_usps.ipynb)
 
 [Equivariant Imaging: Learning Beyond the Range Space](https://openaccess.thecvf.com/content/ICCV2021/papers/Chen_Equivariant_Imaging_Learning_Beyond_the_Range_Space_ICCV_2021_paper.pdf)
 
