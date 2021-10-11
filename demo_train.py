@@ -10,7 +10,7 @@ from dataset.cvdb import CVDB_ICCV
 from transforms.rotate import Rotate
 from transforms.shift import Shift
 
-parser = argparse.ArgumentParser(description='CT experiment parameters.')
+parser = argparse.ArgumentParser(description='EI experiment parameters.')
 
 parser.add_argument('--gpu', default=0, type=int, help='GPU id to use.')
 parser.add_argument('--schedule', nargs='+', type=int,
@@ -36,9 +36,6 @@ parser.add_argument('--resume', default='', type=str, metavar='PATH',
                     help='path to latest checkpoint (default: none)')
 
 # ei specific configs:
-parser.add_argument('--mode', default='ei', type=str,
-                    help="training mode=['ei', 'sup', 'mc', 'ei_adv', 'sup_ei'] "
-                         "(default: ei)")
 parser.add_argument('--ei-trans', default=3, type=int,
                     help='number of transformations for EI (default: 5 for CT, 3 for inpainting)')
 parser.add_argument('--ei-alpha', default=1.0, type=float,
@@ -83,26 +80,10 @@ def main():
                 img_width=256, img_height=256,
                 dtype=torch.float, device=device)
 
-    if args.mode == 'ei':
-        ei.train_ei(dataloader, physics, transform, args.epochs, lr, alpha, args.ckp_interval, args.schedule,
-                    residual=True, pretrained=args.resume, task=args.task, loss_type='l2',
-                    cat=True, lr_cos=args.cos, report_psnr=True)
-    elif args.mode=='sup':
-        ei.train_supervised(dataloader, physics, args.epochs, lr, args.ckp_interval, args.schedule,
-                            residual=True, pretrained=args.resume, task=args.task, loss_type='l2',
-                            cat=True, lr_cos=args.cos, report_psnr=True)
-    elif args.mode=='mc':
-        ei.train_mc(dataloader, physics, args.epochs, lr, args.ckp_interval, args.schedule,
-                    residual=True, pretrained=args.resume, task=args.task, loss_type='l2',
-                    cat=True, lr_cos=args.cos, report_psnr=True)
-    elif args.mode=='ei_adv':
-        ei.train_ei_adv(dataloader, physics, transform, args.epochs, lr, alpha, args.ckp_interval, args.schedule,
-                        residual=True, pretrained=args.resume, task=args.task, loss_type='l2',
-                        cat=True, lr_cos=args.cos, report_psnr=True)
-    elif args.mode=='sup_ei':
-        ei.train_supervised_ei(dataloader, physics, transform, args.epochs, lr, alpha, args.ckp_interval, args.schedule,
-                               residual=True, pretrained=args.resume, task=args.task, loss_type='l2',
-                               cat=True, lr_cos=args.cos, report_psnr=True)
+    ei.train_ei(dataloader, physics, transform, args.epochs, lr, alpha, args.ckp_interval, args.schedule,
+                residual=True, pretrained=args.resume, task=args.task, loss_type='l2',
+                cat=True, lr_cos=args.cos, report_psnr=True)
+
 
 if __name__ == '__main__':
     main()
