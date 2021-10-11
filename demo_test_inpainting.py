@@ -4,7 +4,6 @@ from physics.inpainting import Inpainting
 from dataset.cvdb import CVDB_ICCV
 from models.unet import UNet
 from utils.metric import cal_psnr
-from utils.plot import plot_iccv_img_onerow
 
 import argparse
 
@@ -18,16 +17,10 @@ parser.add_argument('--sample-to-show', default=[0], nargs='*', type=int,
                     help='the test sample id for visualization'
                          'default [0]')
 # specifying path to trained models:
-parser.add_argument('--ckp_sup', default='./ckp/inpainting/ckp_sup_final.pth.tar', type=str, metavar='PATH',
-                    help='path to checkpoint of Supervised net')
-parser.add_argument('--ckp_ei', default='./ckp/inpainting/ckp_ei_final.pth.tar', type=str, metavar='PATH',
+parser.add_argument('--ckp', default='./ckp/inpainting/ckp_ei_final.pth.tar', type=str, metavar='PATH',
                     help='path to checkpoint of EI net')
-parser.add_argument('--ckp_mc', default='./ckp/inpainting/ckp_mc_final.pth.tar', type=str, metavar='PATH',
-                    help='path to checkpoint of Measurement consistent net')
-parser.add_argument('--ckp_ei_sup', default='./ckp/inpainting/ckp_sup_ei_final.pth.tar', type=str, metavar='PATH',
-                    help='path to checkpoint of EI regularized supervised net')
-parser.add_argument('--ckp_ei_adv', default='./ckp/inpainting/ckp_ei_adv_final.pth.tar', type=str, metavar='PATH',
-                    help='path to checkpoint of Adversarial EI net')
+parser.add_argument('--model-name', default='EI', type=str, help="name of the trained model (dafault: 'EI')")
+
 def main():
     args = parser.parse_args()
 
@@ -63,33 +56,31 @@ def main():
         # compute the A^+y or FBP
         fbp = forw.A_dagger(y)
 
-        x_hat_mc = test(unet, args.ckp_mc, fbp)
-        x_hat_ei = test(unet, args.ckp_ei, fbp)
-        x_hat_sup = test(unet, args.ckp_sup, fbp)
-        x_hat_ei_sup = test(unet, args.ckp_ei_sup, fbp)
-        x_hat_ei_adv = test(unet, args.ckp_ei_adv, fbp, adv=True)
-
-        psnr_fbp.append(cal_psnr(fbp, x))
-        psnr_ei.append(cal_psnr(x_hat_ei, x))
-        psnr_mc.append(cal_psnr(x_hat_mc, x))
-        psnr_sup.append(cal_psnr(x_hat_sup, x))
-        psnr_ei_sup.append(cal_psnr(x_hat_ei_sup, x))
-        psnr_ei_adv.append(cal_psnr(x_hat_ei_adv, x))
+        x_hat = test(unet, args.ckp, fbp)
 
         if i in args.sample_to_show:
-            plot_iccv_img_onerow(torch_imgs=[y, fbp, x_hat_mc, x_hat_ei, x_hat_sup, x],
-                                 title=['y', r'$A^\dagger y$', 'MC', 'EI', 'Supervised', 'x (GT)'],
-                                 text=['', '{:.2f}'.format(cal_psnr(fbp, x)),
-                                       '{:.2f}'.format(cal_psnr(x_hat_mc, x)),
-                                       '{:.2f}'.format(cal_psnr(x_hat_ei, x)),
-                                       '{:.2f}'.format(cal_psnr(x_hat_sup, x)), ''],
-                                 text_color='yellow',
-                                 fontsize= 12, xy=[190, 20],
-                                 figsize=(16, 4), save_path=None, show=True)
-
-    print('Inpainting (0.3) AVG-PSNR: A^+y={:.2f}\tMC={:.2f}\tEI={:.2f}\tEI_adv={:.2f}\tSup={:.2f}\tEI_sup={:.2f}'.format(
-        np.mean(psnr_fbp), np.mean(psnr_mc), np.mean(psnr_ei),
-        np.mean(psnr_ei_adv), np.mean(psnr_sup), np.mean(psnr_ei_sup)))
+            plt.subplot(1,4,1)
+            plt.imshow(y.squeeze().detach().permute(1, 2, 0).cpu().numpy())
+            plt.title('y')
+            
+            plt.subplot(1,4,2)
+            plt.imshow(fbp.squeeze().detach().permute(1, 2, 0).cpu().numpy())
+            plt.title('FBP ({:.2f})'.format(cal_psnr(x, fbp)))
+            
+            plt.subplot(1,4,3)
+            plt.imshow(x_hat.squeeze().detach().permute(1, 2, 0).cpu().numpy())
+            plt.title('{} ({:.2f})'.format(args.model_name, cal_psnr(x, fbp)))
+            
+            plt.subplot(1,4,4)
+            plt.imshow(x.squeeze().detach().permute(1, 2, 0).cpu().numpy())
+            plt.title('x (GT)')
+            
+            ax = plt.gca()
+            ax.set_xticks([]), ax.set_yticks([])
+            plt.subplots_adjust(left=0.1, bottom=0.1, top=0.9, right=0.9, hspace=0.02, wspace=0.02)
+            plt.show()
+            
+    print('Inpainting (0.3) AVG-PSNR: A^+y={:.2f}\t{}={:.2f}'.format(np.mean(psnr_fbp), args.model_name, np.mean(psnr_ei)))
 
 if __name__=='__main__':
     main()
