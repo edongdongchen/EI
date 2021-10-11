@@ -6,6 +6,7 @@ from models.unet import UNet
 from utils.metric import cal_psnr
 
 import argparse
+import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser(description='Inpainting test.')
 
@@ -37,7 +38,7 @@ def main():
     unet = UNet(in_channels=3, out_channels=3, compact=4, residual=True,
                 circular_padding=True, cat=True).to(device)
 
-    psnr_fbp, psnr_ei, psnr_mc, psnr_sup, psnr_ei_sup, psnr_ei_adv=[],[],[],[],[],[]
+    psnr_fbp, psnr_net=[],[]
 
     def test(net, ckp, fbp, adv=False):
         checkpoint = torch.load(ckp, map_location=device)
