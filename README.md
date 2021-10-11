@@ -13,7 +13,6 @@ In ICCV 2021 (oral)
 
 ![flexible](https://github.com/edongdongchen/EI/blob/main/images/ct.png)
 ![flexible](https://github.com/edongdongchen/EI/blob/main/images/ipt.png)
-
 Figure: **Learning to image from only measurements.** Training an imaging network through just measurement consistency (MC) does not significantly improve the reconstruction over the simple pseudo-inverse (<img src="https://render.githubusercontent.com/render/math?math=A^{\dagger}y">). However, by enforcing invariance in the reconstructed image set, equivariant imaging (EI) performs almost as well as a fully supervised network. Top: sparse view CT reconstruction, Bottom: pixel inpainting. PSNR is shown in top right corner of the images.
 
 **EI** is a new `self-supervised`, `end-to-end` and `physics-based` learning framework for inverse problems with theoretical guarantees which leverages simple but fundamental priors about natural signals: `symmetry` and `low-dimensionality`.
@@ -26,7 +25,7 @@ Figure: **Learning to image from only measurements.** Training an imaging networ
  to get started with EI.
 
 ## Overview
-**The problem:** Imaging systems capture noisy 𝑚-dimensional measurements 𝑦 of a 𝑛-dimensional signal 𝑥 through a linear operator 𝐴: 𝑦=𝐴𝑥+𝜖. We aim to learn the reconstruction function 𝑓(𝑦)=𝑥 where
+**The problem:** Imaging systems capture noisy measurements 𝑦<img src="https://render.githubusercontent.com/render/math?math=\in R^m"> of a signal 𝑥 <img src="https://render.githubusercontent.com/render/math?math=\in R^n"> through a linear operator 𝐴<img src="https://render.githubusercontent.com/render/math?math=\in R^{m\times n}">: 𝑦=𝐴𝑥+𝜖. We aim to learn the reconstruction function 𝑓(𝑦)=𝑥 where
 - `NO` groundtruth data {𝑥} for training as most inverse problems don’t have ground-truth;
 - only a `single` forward operator 𝐴 is available;
 - 𝐴 has a `non-trivial` nullspace (e.g. 𝑚<𝑛).
@@ -36,16 +35,19 @@ Figure: **Learning to image from only measurements.** Training an imaging networ
 - It is `IMPOSSIBLE` to learn the signal set 𝒳 using {𝑦} alone.
 
 **The motivation:** 
-We assume the signal set <img src="https://render.githubusercontent.com/render/math?math=\mathcal{X}"> is `invariant` to a groups of transformations <img src="https://render.githubusercontent.com/render/math?math=T_g"> (orthgonal matrix, e.g. shift, rotation, scaling, reflection, etc.) related to a group <img src="https://render.githubusercontent.com/render/math?math=\mathcal{G}">, such that <img src="https://render.githubusercontent.com/render/math?math=T_gx\in \mathcal{X}"> and the sets <img src="https://render.githubusercontent.com/render/math?math=T_g\mathcal{X}">
+
+We assume the signal set <img src="https://render.githubusercontent.com/render/math?math=\mathcal{X}"> has a low-dimensional structure and is `invariant` to a groups of transformations <img src="https://render.githubusercontent.com/render/math?math=T_g"> (orthgonal matrix, e.g. shift, rotation, scaling, reflection, etc.) related to a group <img src="https://render.githubusercontent.com/render/math?math=\mathcal{G}">, such that <img src="https://render.githubusercontent.com/render/math?math=T_gx\in \mathcal{X}"> and the sets <img src="https://render.githubusercontent.com/render/math?math=T_g\mathcal{X}">
 and <img src="https://render.githubusercontent.com/render/math?math=\mathcal{X}"> are the same. For example,
-1. natural images are shift invariant.
-2. in CT/MRI data, organs can be imaged at different angles making the problem invariant to rotation.
+- natural images are shift invariant.
+- in CT/MRI data, organs can be imaged at different angles making the problem invariant to rotation.
 
 Key observations: 
+
 - Invariance provides access to implicit operators <img src="https://render.githubusercontent.com/render/math?math=A_g=AT_g"> with potentially different range spaces: <img src="https://render.githubusercontent.com/render/math?math=Ax=AT_gT_g^{\top}x=A_g\tilde{x}"> where <img src="https://render.githubusercontent.com/render/math?math=A_g=AT_g"> and <img src="https://render.githubusercontent.com/render/math?math=\tilde{x}=T_g^{\top}x">. Obviously, <img src="https://render.githubusercontent.com/render/math?math=\tilde{x}"> should also in the signal set.
 - The composition 𝑓∘𝐴 is **equivariant** to the group of transformations <img src="https://render.githubusercontent.com/render/math?math={T_g}">: <img src="https://render.githubusercontent.com/render/math?math=f(AT_g x)=T_g f(Ax)">.
 
 ![overview](https://github.com/edongdongchen/EI/blob/main/images/invariance_iccv.png)
+Figure: **Learning with and without equivariance in a toy 1D signal inpainting task.** The signal set consists of different scaling of a triangular signal. On the left, the dataset does not enjoy any invariance, and hence it is not possible to learn the data distribution in the nullspace of 𝐴. In this case, the network can inpaint the signal in an arbitrary way (in green), while achieving zero data consistency loss. On the right, the dataset is shift invariant. The range space of <img src="https://render.githubusercontent.com/render/math?math=A^{\top}"> is shifted via the transformations <img src="https://render.githubusercontent.com/render/math?math=T_g">, and the network inpaints the signal correctly.
 
 ### Equivariant Imaging: to learn 𝑓 by using only measurements {𝑦}, all you need is to:
 - Define:
@@ -62,11 +64,6 @@ Key observations:
 ![flowchart](https://github.com/edongdongchen/EI/blob/main/images/fig_flowchart.png)
 
 - Train: finally learn the reconstruction function  <img src="https://render.githubusercontent.com/render/math?math=f_\theta">  by solving: <img src="https://render.githubusercontent.com/render/math?math=\arg\min_{\theta}\mathbb{E}_{y,g}"><img src="https://render.githubusercontent.com/render/math?math=\{L(Ax^{(1)}, y)"> + <img src="https://render.githubusercontent.com/render/math?math=\lambda L(x^{(2)}, x^{(3)})\}">
-
-
-**Analysis:** check the paper for the detailed analysis. For more detailed theoretical guarantees see:
-
-J. Tachella, D. Chen, M. E. Davies, Sampling Theorems for Unsupervised Learning in Inverse problems. Preprint 2021.
 
 
 ## Requirements
