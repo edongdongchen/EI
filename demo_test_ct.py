@@ -3,10 +3,10 @@ import torch
 from models.unet import UNet
 from dataset.ctdb import CTData
 from physics.ct import CT
-from utils.plot import plot_iccv_img_onerow
 from utils.metric import cal_psnr
 
 import argparse
+import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser(description='Inpainting test.')
 
@@ -14,12 +14,8 @@ parser.add_argument('--gpu', default=0, type=int, help='GPU id to use.')
 parser.add_argument('--sample-to-show', default=[9], nargs='*', type=int,
                     help='the test sample id for visualization'
                          'default [9]')
-parser.add_argument('--ckp_sup', default='./ckp/ct/ckp_sup_final.pth.tar', type=str, metavar='PATH',
-                    help='path to checkpoint of Supervised net')
-parser.add_argument('--ckp_ei', default='./ckp/ct/ckp_ei_final.pth.tar', type=str, metavar='PATH',
+parser.add_argument('--ckp', default='./ckp/ct/ckp_ei_final.pth.tar', type=str, metavar='PATH',
                     help='path to checkpoint of EI net')
-parser.add_argument('--ckp_mc', default='./ckp/ct/ckp_mc_final.pth.tar', type=str, metavar='PATH',
-                    help='path to checkpoint of Measurement consistent net')
 
 def main():
     args = parser.parse_args()
@@ -44,23 +40,30 @@ def main():
             x = x.type(torch.float).to(device)
 
             y = forw.A(x)
-
             fbp = forw.A_dagger(y)
+            x_hat = test(unet, args.ckp_net, fbp)
 
-            x_hat_mc = test(unet, args.ckp_mc, fbp)
-            x_hat_ei = test(unet, args.ckp_ei, fbp)
-            x_hat_sup = test(unet, args.ckp_sup, fbp)
-
-            plot_iccv_img_onerow(torch_imgs=[y, fbp, x_hat_mc, x_hat_ei, x_hat_sup, x],
-                                 title=['y', 'FBP', 'MC', 'EI', 'Supervised', 'x (GT)'],
-                                 text=['', '{:.2f}'.format(cal_psnr(x, fbp)),
-                                       '{:.2f}'.format(cal_psnr(x, x_hat_mc)),
-                                       '{:.2f}'.format(cal_psnr(x, x_hat_ei)),
-                                       '{:.2f}'.format(cal_psnr(x, x_hat_sup)), ''],
-                                 text_color='white', xy=[97, 9], fontsize=12,
-                                 figsize=(16, 4), save_path=None, show=True)
+            plt.subplot(1,4,1)
+            plt.imshow(y[0].detach().permute(1, 2, 0).cpu().numpy())
+            plt.title('y')
+            
+            plt.subplot(1,4,2)
+            plt.imshow(fbp[0].detach().permute(1, 2, 0).cpu().numpy())
+            plt.title('FBP ({:.2f})'.format(cal_psnr(x, fbp)))
+            
+            plt.subplot(1,4,3)
+            plt.imshow(x_hat[0].detach().permute(1, 2, 0).cpu().numpy())
+            plt.title('EI ({:.2f})'.format(cal_psnr(x, fbp)))
+            
+            plt.subplot(1,4,4)
+            plt.imshow(x[0].detach().permute(1, 2, 0).cpu().numpy())
+            plt.title('x (GT)')
+            
+            ax = plt.gca()
+            ax.set_xticks([]), ax.set_yticks([])
+            plt.subplots_adjust(left=0.1, bottom=0.1, top=0.9, right=0.9, hspace=0.02, wspace=0.02)
+            plt.show()
         else:
             continue
-
 if __name__=='__main__':
     main()
