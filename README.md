@@ -5,7 +5,7 @@ This repository is the official implementation of [Equivariant Imaging: Learning
 by [Dongdong Chen](https://dongdongchen.com), [Julián Tachella](https://tachella.github.io/), [Mike E. Davies](https://scholar.google.co.uk/citations?user=dwmfR3oAAAAJ&hl=en).
 
 
-### [post](https://tachella.github.io/2021/04/16/equivariant-imaging-learning-beyond-the-range-space/) | [paper](https://arxiv.org/abs/2103.14756) | [colab](https://colab.research.google.com/github/edongdongchen/EI/blob/main/ei_demo_cs_usps.ipynb) [![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/edongdongchen/EI/blob/main/ei_demo_cs_usps.ipynb)
+### [post](https://tachella.github.io/2021/04/16/equivariant-imaging-learning-beyond-the-range-space/) | [paper](https://arxiv.org/abs/2103.14756) | [toy example](https://github.com/edongdongchen/EI/blob/main/ei_demo_cs_usps.ipynb) [![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/edongdongchen/EI/blob/main/ei_demo_cs_usps.ipynb)
 
 
 
