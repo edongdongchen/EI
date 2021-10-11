@@ -27,14 +27,14 @@ Figure: **Learning to image from only measurements.** Training an imaging networ
  to get started with EI.
 
 ## Overview
-**The problem:** Imaging systems capture noisy measurements 𝑦<img src="https://render.githubusercontent.com/render/math?math=\in R^m"> of a signal 𝑥 <img src="https://render.githubusercontent.com/render/math?math=\in R^n"> through a linear operator 𝐴<img src="https://render.githubusercontent.com/render/math?math=\in R^{m\times n}">: 𝑦=𝐴𝑥+𝜖. We aim to learn the reconstruction function 𝑓(𝑦)=𝑥 where
-- `NO` groundtruth data {𝑥} for training as most inverse problems don’t have ground-truth;
-- only a `single` forward operator 𝐴 is available;
-- 𝐴 has a `non-trivial` nullspace (e.g. 𝑚<𝑛).
+**The problem:** Imaging systems capture noisy measurements <img src="https://render.githubusercontent.com/render/math?math=y\in R^m"> of a signal <img src="https://render.githubusercontent.com/render/math?math=x\in R^n"> through a linear operator <img src="https://render.githubusercontent.com/render/math?math=A\in R^{m\times n: y=Ax+\epsilon}">. We aim to learn the reconstruction function <img src="https://render.githubusercontent.com/render/math?math=f(y)=x"> where
+- `NO` groundtruth data <img src="https://render.githubusercontent.com/render/math?math={x}"> for training as most inverse problems don’t have ground-truth;
+- only a `single` forward operator <img src="https://render.githubusercontent.com/render/math?math=A"> is available;
+- <img src="https://render.githubusercontent.com/render/math?math=A"> has a `non-trivial` nullspace (e.g. <img src="https://render.githubusercontent.com/render/math?math=m<n">).
 
 **The challenge:** 
-- We have `NO` information about the signal set 𝒳 outside the range space of <img src="https://render.githubusercontent.com/render/math?math=A^{\top}"> or <img src="https://render.githubusercontent.com/render/math?math=A^{\dagger}">.
-- It is `IMPOSSIBLE` to learn the signal set 𝒳 using {𝑦} alone.
+- We have `NO` information about the signal set <img src="https://render.githubusercontent.com/render/math?math=\mathcal{X}"> outside the range space of <img src="https://render.githubusercontent.com/render/math?math=A^{\top}"> or <img src="https://render.githubusercontent.com/render/math?math=A^{\dagger}">.
+- It is `IMPOSSIBLE` to learn the signal set <img src="https://render.githubusercontent.com/render/math?math=\mathcal{X}"> using <img src="https://render.githubusercontent.com/render/math?math={y_i}"> alone.
 
 **The motivation:** 
 
@@ -46,20 +46,20 @@ and <img src="https://render.githubusercontent.com/render/math?math=\mathcal{X}"
 Key observations: 
 
 - Invariance provides access to implicit operators <img src="https://render.githubusercontent.com/render/math?math=A_g=AT_g"> with potentially different range spaces: <img src="https://render.githubusercontent.com/render/math?math=Ax=AT_gT_g^{\top}x=A_g\tilde{x}"> where <img src="https://render.githubusercontent.com/render/math?math=A_g=AT_g"> and <img src="https://render.githubusercontent.com/render/math?math=\tilde{x}=T_g^{\top}x">. Obviously, <img src="https://render.githubusercontent.com/render/math?math=\tilde{x}"> should also in the signal set.
-- The composition 𝑓∘𝐴 is **equivariant** to the group of transformations <img src="https://render.githubusercontent.com/render/math?math={T_g}">: <img src="https://render.githubusercontent.com/render/math?math=f(AT_g x)=T_g f(Ax)">.
+- The composition <img src="https://render.githubusercontent.com/render/math?math=f\circ A"> is **equivariant** to the group of transformations <img src="https://render.githubusercontent.com/render/math?math={T_g}">: <img src="https://render.githubusercontent.com/render/math?math=f(AT_g x)=T_g f(Ax)">.
 
 ![overview](https://github.com/edongdongchen/EI/blob/main/images/invariance_iccv.png)
-Figure: **Learning with and without equivariance in a toy 1D signal inpainting task.** The signal set consists of different scaling of a triangular signal. On the left, the dataset does not enjoy any invariance, and hence it is not possible to learn the data distribution in the nullspace of 𝐴. In this case, the network can inpaint the signal in an arbitrary way (in green), while achieving zero data consistency loss. On the right, the dataset is shift invariant. The range space of <img src="https://render.githubusercontent.com/render/math?math=A^{\top}"> is shifted via the transformations <img src="https://render.githubusercontent.com/render/math?math=T_g">, and the network inpaints the signal correctly.
+Figure: **Learning with and without equivariance in a toy 1D signal inpainting task.** The signal set consists of different scaling of a triangular signal. On the left, the dataset does not enjoy any invariance, and hence it is not possible to learn the data distribution in the nullspace of <img src="https://render.githubusercontent.com/render/math?math=A">. In this case, the network can inpaint the signal in an arbitrary way (in green), while achieving zero data consistency loss. On the right, the dataset is shift invariant. The range space of <img src="https://render.githubusercontent.com/render/math?math=A^{\top}"> is shifted via the transformations <img src="https://render.githubusercontent.com/render/math?math=T_g">, and the network inpaints the signal correctly.
 
 ### Equivariant Imaging: to learn 𝑓 by using only measurements {𝑦}, all you need is to:
 - Define:
 
 1. define a transformation group  <img src="https://render.githubusercontent.com/render/math?math={T_g}"> based on the certain invariances to the signal set.
-2. define a neural reconstruction function  <img src="https://render.githubusercontent.com/render/math?math=f_\theta: y\rightarrow x">, e.g. <img src="https://render.githubusercontent.com/render/math?math=f_\theta=G_\theta \circ A^{\dagger}"> where <img src="https://render.githubusercontent.com/render/math?math=A^{\dagger}"> is the pseudo-inverse of 𝐴 and <img src="https://render.githubusercontent.com/render/math?math=G_\theta: R^n\rightarrow R^n">  is a UNet-like neural net.
+2. define a neural reconstruction function  <img src="https://render.githubusercontent.com/render/math?math=f_\theta: y\rightarrow x">, e.g. <img src="https://render.githubusercontent.com/render/math?math=f_\theta=G_\theta \circ A^{\dagger}"> where <img src="https://render.githubusercontent.com/render/math?math=A^{\dagger}"> is the pseudo-inverse of <img src="https://render.githubusercontent.com/render/math?math=A"> and <img src="https://render.githubusercontent.com/render/math?math=G_\theta: R^n\rightarrow R^n">  is a UNet-like neural net.
 
 - Calculate:
 
-1. calculate  <img src="https://render.githubusercontent.com/render/math?math=x^{(1)}=f_\theta(y)">  as the estimation of  𝑥.
+1. calculate  <img src="https://render.githubusercontent.com/render/math?math=x^{(1)}=f_\theta(y)">  as the estimation of  <img src="https://render.githubusercontent.com/render/math?math=x">.
 2. calculate  <img src="https://render.githubusercontent.com/render/math?math=x^{(2)}=T_gx^{(1)}"> by transforming  <img src="https://render.githubusercontent.com/render/math?math=x^{(1)}">.
 3. calculate  <img src="https://render.githubusercontent.com/render/math?math=x^{(3)}=f_\theta(Ax^{(2)})"> by reconstructing  <img src="https://render.githubusercontent.com/render/math?math=x^{(2)}">  from its measurement <img src="https://render.githubusercontent.com/render/math?math=Ax^{(2)}">.
 
