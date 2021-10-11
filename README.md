@@ -5,6 +5,10 @@ This repository is the official implementation of [Equivariant Imaging: Learning
 by [Dongdong Chen](https://dongdongchen.com), [Julián Tachella](https://tachella.github.io/), [Mike E. Davies](https://scholar.google.co.uk/citations?user=dwmfR3oAAAAJ&hl=en).
 
 
+### [post](https://tachella.github.io/2021/04/16/equivariant-imaging-learning-beyond-the-range-space/) | [paper](https://arxiv.org/abs/2103.14756) | [colab](https://colab.research.google.com/github/edongdongchen/EI/blob/main/ei_demo_cs_usps.ipynb) [![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/edongdongchen/EI/blob/main/ei_demo_cs_usps.ipynb)
+
+
+
 ## Requirements
 
 * [PyTorch](https://pytorch.org/) (1.6)
@@ -17,9 +21,8 @@ conda env create -f environment.yml
 ## Get quickly started
 
 * Please find the [blog post](https://tachella.github.io/2021/04/16/equivariant-imaging-learning-beyond-the-range-space/) for a quick introduction of EI.
-* Please find the 30 lines code [get_started.py](https://github.com/edongdongchen/EI/blob/master/get_started.py) to get started with EI.
 * Please find the core implementation of EI at './ei/closure/ei.py' ([ei.py](https://github.com/edongdongchen/EI/blob/master/ei/closure/ei.py)).
-
+* Please find the 30 lines code [get_started.py](https://github.com/edongdongchen/EI/blob/master/get_started.py) and the [colab toy example](https://colab.research.google.com/github/edongdongchen/EI/blob/main/ei_demo_cs_usps.ipynb) to get started with EI.
 
 
 ## Test
