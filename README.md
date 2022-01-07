@@ -112,8 +112,8 @@ python3 demo_train.py --h
 ### Citation
 	
 	@inproceedings{chen2021equivariant,
-	    author    = {Chen, Dongdong and Tachella, Juli{\'a}n and Davies, Mike E},
 	    title     = {Equivariant Imaging: Learning Beyond the Range Space},
+	    author    = {Chen, Dongdong and Tachella, Juli{\'a}n and Davies, Mike E},
 	    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
 	    month     = {October},
 	    year      = {2021},
