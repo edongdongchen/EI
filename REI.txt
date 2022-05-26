@@ -1,0 +1,5 @@
+@inproceedings{chen2022robust,
+    title     = {Robust Equivariant Imaging: a fully unsupervised framework for learning to image from noisy and partial measurements},
+    author    = {Chen, Dongdong and Tachella, Juli{\'a}n and Davies, Mike E},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    year      = {2022}}
