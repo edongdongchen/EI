@@ -57,7 +57,10 @@ def main():
         # compute the A^+y or FBP
         fbp = forw.A_dagger(y)
 
-        x_hat = test(unet, args.ckp, fbp)
+        x_net = test(unet, args.ckp, fbp)
+        
+        psnr_fbp.append(cal_psnr(x, fbp))
+        psnr_net.append(cal_psnr(x, x_net))
 
         if i in args.sample_to_show:
             plt.subplot(1,4,1)
@@ -69,8 +72,8 @@ def main():
             plt.title('FBP ({:.2f})'.format(cal_psnr(x, fbp)))
             
             plt.subplot(1,4,3)
-            plt.imshow(x_hat.squeeze().detach().permute(1, 2, 0).cpu().numpy())
-            plt.title('{} ({:.2f})'.format(args.model_name, cal_psnr(x, fbp)))
+            plt.imshow(x_net.squeeze().detach().permute(1, 2, 0).cpu().numpy())
+            plt.title('{} ({:.2f})'.format(args.model_name, cal_psnr(x, x_net)))
             
             plt.subplot(1,4,4)
             plt.imshow(x.squeeze().detach().permute(1, 2, 0).cpu().numpy())
