@@ -81,7 +81,7 @@ def main():
             plt.subplots_adjust(left=0.1, bottom=0.1, top=0.9, right=0.9, hspace=0.02, wspace=0.02)
             plt.show()
             
-    print('Inpainting (0.3) AVG-PSNR: A^+y={:.2f}\t{}={:.2f}'.format(np.mean(psnr_fbp), args.model_name, np.mean(psnr_ei)))
+    print('Inpainting (0.3) AVG-PSNR: A^+y={:.2f}\t{}={:.2f}'.format(np.mean(psnr_fbp), args.model_name, np.mean(psnr_net)))
 
 if __name__=='__main__':
     main()
