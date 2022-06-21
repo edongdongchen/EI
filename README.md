@@ -21,10 +21,12 @@ Figure: **Learning to image from only measurements.** Training an imaging networ
 
 ## Get quickly started
 
-* Please find the [blog post](https://tachella.github.io/2021/04/16/equivariant-imaging-learning-beyond-the-range-space/) for a quick introduction of EI.
+* Please find the [presentation video](https://www.youtube.com/watch?v=wGxW5bcCdxo) and [blog post](https://tachella.github.io/projects/equivariantimaging/) for a quick introduction of EI.
 * Please find the core implementation of EI at './ei/closure/ei.py' ([ei.py](https://github.com/edongdongchen/EI/blob/master/ei/closure/ei.py)).
 * Please find the 30 lines code [get_started.py](https://github.com/edongdongchen/EI/blob/master/get_started.py) and the [toy cs example](https://github.com/edongdongchen/EI/blob/main/ei_demo_cs_usps.ipynb) [![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/edongdongchen/EI/blob/main/ei_demo_cs_usps.ipynb)
  to get started with EI.
+* Please find the follow-up works: [robust EI (CVPR2022 oral)](https://github.com/edongdongchen/REI) and [theorems paper](https://arxiv.org/abs/2203.12513).
+
 
 ## Overview
 **The problem:** Imaging systems capture noisy measurements <img src="https://render.githubusercontent.com/render/math?math=y\in R^m"> of a signal <img src="https://render.githubusercontent.com/render/math?math=x\in R^n"> through a linear operator <img src="https://render.githubusercontent.com/render/math?math=A\in R^{m\times n}: y"><img src="https://render.githubusercontent.com/render/math?math==Ax"> + <img src="https://render.githubusercontent.com/render/math?math=\epsilon">. We aim to learn the reconstruction function <img src="https://render.githubusercontent.com/render/math?math=f(y)=x"> where
